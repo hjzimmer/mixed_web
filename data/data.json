@@ -1,0 +1,259 @@
+{
+    "team": {
+        "name": "Ottis Mixed",
+        "players": [
+            {
+                "id": "a32b176f7b167309",
+                "name": "Alexander Burkon"
+            },
+            {
+                "id": "dd3ce94ba4f61129",
+                "name": "Martin Schenker"
+            },
+            {
+                "id": "06ad2f2916ebce7e",
+                "name": "Hans-Joachim Zimmer"
+            },
+            {
+                "id": "76df1f72c6b0bf89",
+                "name": "Silvio Mittasch"
+            },
+            {
+                "id": "83108a1af6c71edf",
+                "name": "Andre Brylla"
+            },
+            {
+                "id": "395104cf84d0f099",
+                "name": "Kristina Bau"
+            },
+            {
+                "id": "32eab2e50e957557",
+                "name": "Katja Zimmer"
+            },
+            {
+                "id": "3046b3f94c9d8d90",
+                "name": "Antje Förster"
+            },
+            {
+                "id": "c3050a6c70949ebf",
+                "name": "Louisa Härig"
+            },
+            {
+                "id": "86e1d9675b2a48f8",
+                "name": "Isabell Rodriguez"
+            },
+            {
+                "id": "247a2395e558b53a",
+                "name": "Mandy Schenker"
+            },
+            {
+                "id": "9e22b15166e03e17",
+                "name": "Theo"
+            },
+            {
+                "id": "72a3a47df6bc6cdd",
+                "name": "Fred"
+            }
+        ]
+    },
+    "matchdays": [
+        {
+            "id": "d137a274c8a11de4",
+            "date": "2026-10-06",
+            "time": "20:00",
+            "location": "Weixdorf, Rathausplatz 2a",
+            "opponents": [
+                "SG Weixdorf",
+                "SG Klotzsche (Brauer Rangers)"
+            ],
+            "games": [
+                {
+                    "id": "a11c0d0654fdb44c",
+                    "opponent": "SG Weixdorf",
+                    "sets": []
+                },
+                {
+                    "id": "1c1d71e81b059536",
+                    "opponent": "SG Klotzsche (Brauer Rangers)",
+                    "sets": []
+                }
+            ]
+        },
+        {
+            "id": "6c8f09adb349717c",
+            "date": "2026-11-05",
+            "time": "19:15",
+            "location": "Heimspiel",
+            "opponents": [
+                "Grün Weiss Dresden (VG Freitag)",
+                "Stadtsport Dresden (Volleywood)"
+            ],
+            "games": [
+                {
+                    "id": "c8fc6403b335b0af",
+                    "opponent": "Grün Weiss Dresden (VG Freitag)",
+                    "sets": []
+                },
+                {
+                    "id": "4c5a19401b50e945",
+                    "opponent": "Stadtsport Dresden (Volleywood)",
+                    "sets": []
+                }
+            ]
+        },
+        {
+            "id": "760b6667eb3422a9",
+            "date": "2026-12-17",
+            "time": "19:15",
+            "location": "Heimspiel",
+            "opponents": [
+                "Partizan 2002",
+                "BSV AOK (Wild Neons)"
+            ],
+            "games": [
+                {
+                    "id": "e61badb09ae048dd",
+                    "opponent": "Partizan 2002",
+                    "sets": []
+                },
+                {
+                    "id": "393a0b80a5e9fa1b",
+                    "opponent": "BSV AOK (Wild Neons)",
+                    "sets": []
+                }
+            ]
+        },
+        {
+            "id": "981ca929e0de0087",
+            "date": "2027-01-28",
+            "time": "19:15",
+            "location": "Heimspiel",
+            "opponents": [
+                "Rosswein (Ostblock)",
+                "Grün Weiss Dresden (VG Freitag)"
+            ],
+            "games": [
+                {
+                    "id": "00efdd4c4fbfa9ed",
+                    "opponent": "Rosswein (Ostblock)",
+                    "sets": []
+                },
+                {
+                    "id": "d812b06c6d08bc5e",
+                    "opponent": "Grün Weiss Dresden (VG Freitag)",
+                    "sets": []
+                }
+            ]
+        },
+        {
+            "id": "cea5c504060d4a9a",
+            "date": "2027-02-25",
+            "time": "20:00",
+            "location": "Eibenstocker Str. 30, Erlwein Gym",
+            "opponents": [
+                "BSV AOK (Wild Neons)",
+                "SG Weixdorf"
+            ],
+            "games": [
+                {
+                    "id": "3c3b5945f009e86f",
+                    "opponent": "BSV AOK (Wild Neons)",
+                    "sets": []
+                },
+                {
+                    "id": "10c393082749c816",
+                    "opponent": "SG Weixdorf",
+                    "sets": []
+                }
+            ]
+        },
+        {
+            "id": "328eb0a0fd0d7066",
+            "date": "2027-03-25",
+            "time": "18:00",
+            "location": "Güntzstr. 3, BSZ Bau Technik",
+            "opponents": [
+                "Stadtsport Dresden (Volleywood)",
+                "TSV Dresden (Legenden)"
+            ],
+            "games": [
+                {
+                    "id": "04db6ad6cb0ee44d",
+                    "opponent": "Stadtsport Dresden (Volleywood)",
+                    "sets": []
+                },
+                {
+                    "id": "aff1a75271bab96a",
+                    "opponent": "TSV Dresden (Legenden)",
+                    "sets": []
+                }
+            ]
+        },
+        {
+            "id": "6222f1a4ab158f7e",
+            "date": "2027-04-15",
+            "time": "19:15",
+            "location": "Heimspiel",
+            "opponents": [
+                "SG Klotzsche (Brauer Rangers)",
+                "Partizan 2002"
+            ],
+            "games": [
+                {
+                    "id": "b84bfa1d15f3969a",
+                    "opponent": "SG Klotzsche (Brauer Rangers)",
+                    "sets": []
+                },
+                {
+                    "id": "7d7d15ab614539a6",
+                    "opponent": "Partizan 2002",
+                    "sets": []
+                }
+            ]
+        },
+        {
+            "id": "f3b03f4f36d87dff",
+            "date": "2027-05-06",
+            "time": "19:15",
+            "location": "Heimspiel",
+            "opponents": [
+                "Rosswein (Ostblock)",
+                "WSV Gorbitz (Mixed Smarties)"
+            ],
+            "games": [
+                {
+                    "id": "4b4ad373aeaa0420",
+                    "opponent": "Rosswein (Ostblock)",
+                    "sets": []
+                },
+                {
+                    "id": "d27638207a49708b",
+                    "opponent": "WSV Gorbitz (Mixed Smarties)",
+                    "sets": []
+                }
+            ]
+        },
+        {
+            "id": "0f13d4cc76860be1",
+            "date": "2027-05-26",
+            "time": "20:30",
+            "location": "Cämmerswalder Str 41, Unischule Dresden",
+            "opponents": [
+                "TSV Dresden (Legenden)",
+                "WSV Gorbitz (Mixed Smarties)"
+            ],
+            "games": [
+                {
+                    "id": "15872538dc9de231",
+                    "opponent": "TSV Dresden (Legenden)",
+                    "sets": []
+                },
+                {
+                    "id": "e58f2e71cb200e19",
+                    "opponent": "WSV Gorbitz (Mixed Smarties)",
+                    "sets": []
+                }
+            ]
+        }
+    ]
+}
