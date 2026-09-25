@@ -102,10 +102,10 @@ input { min-width: 0; padding: 11px 12px; border: 1px solid var(--line); backgro
 .metric-link { color: var(--green); font: bold 12px Arial, sans-serif; }
 .compact-stats { margin-top: 18px; }
 .compact-stats-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; border-top: 1px solid var(--line); }
-.compact-stat-row { display: grid; grid-template-columns: minmax(110px, 1.4fr) repeat(3, minmax(55px, 1fr)); gap: 8px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--line); }
+.compact-stat-row { display: grid; grid-template-columns: minmax(110px, 1.4fr) repeat(2, minmax(70px, 1fr)); gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--line); }
 .compact-stat-row strong, .compact-stat-row span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.compact-stat-row strong { font-size: 14px; }
-.compact-stat-row span { color: var(--muted); font: 11px Arial, sans-serif; }
+.compact-stat-row strong { font-size: 15px; }
+.compact-stat-row span { color: var(--muted); font: 12px Arial, sans-serif; }
 .compact-list { border-top: 1px solid var(--line); }
 .compact-row { justify-content: start; border-bottom: 1px solid var(--line); }
 .compact-date { width: 56px; color: var(--green); font-size: 18px; }
@@ -144,6 +144,6 @@ td { color: var(--muted); }
     .game-heading { flex-direction: column; }
     .game-heading .button { width: 100%; }
     .compact-stats-list { grid-template-columns: 1fr; }
-    .compact-stat-row { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .compact-stat-row { grid-template-columns: 1fr 1fr; gap: 8px; }
     .compact-stat-row strong { grid-column: 1 / -1; }
 }
