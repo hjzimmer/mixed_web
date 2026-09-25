@@ -97,3 +97,14 @@ function sortMatchdays(array $matchdays): array
     usort($matchdays, static fn (array $left, array $right): int => strcmp($left['date'] . $left['time'], $right['date'] . $right['time']));
     return $matchdays;
 }
+
+/**
+ * Checks whether a string is a safe absolute http(s) URL.
+ *
+ * @param string $url URL to validate.
+ * @return bool True when the URL uses http or https.
+ */
+function isValidHttpUrl(string $url): bool
+{
+    return $url !== '' && filter_var($url, FILTER_VALIDATE_URL) !== false && in_array(parse_url($url, PHP_URL_SCHEME), ['http', 'https'], true);
+}

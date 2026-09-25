@@ -34,3 +34,29 @@ function changePlayerPoints(event) {
 document.querySelectorAll('[data-step]').forEach((button) => {
     button.addEventListener('click', changePlayerPoints);
 });
+
+/**
+ * Opens the dialog referenced by a trigger button's data-open-dialog attribute and clears its form.
+ *
+ * @param {MouseEvent} event Trigger button click event.
+ * @returns {void}
+ */
+function openDialog(event) {
+    const dialog = document.getElementById(event.currentTarget.dataset.openDialog);
+    dialog?.querySelector('form')?.reset();
+    dialog?.showModal();
+}
+
+document.querySelectorAll('[data-open-dialog]').forEach((button) => {
+    button.addEventListener('click', openDialog);
+});
+
+document.querySelectorAll('[data-close-dialog]').forEach((button) => {
+    button.addEventListener('click', () => button.closest('dialog')?.close());
+});
+
+const loginDialog = document.getElementById('login-dialog');
+const errorNotice = document.querySelector('.notice.error');
+if (loginDialog && errorNotice?.textContent.includes('Passwort')) {
+    loginDialog.showModal();
+}

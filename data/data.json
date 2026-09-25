@@ -12,7 +12,7 @@
             },
             {
                 "id": "06ad2f2916ebce7e",
-                "name": "Hans-Joachim Zimmer"
+                "name": "Achim Zimmer"
             },
             {
                 "id": "76df1f72c6b0bf89",
@@ -48,11 +48,7 @@
             },
             {
                 "id": "9e22b15166e03e17",
-                "name": "Theo"
-            },
-            {
-                "id": "72a3a47df6bc6cdd",
-                "name": "Fred"
+                "name": "Theo Radecker"
             }
         ]
     },
@@ -255,5 +251,11 @@
                 }
             ]
         }
-    ]
+    ],
+    "auth": {
+        "password": "admin"
+    },
+    "links": {
+        "ssvbTableUrl": "https://www.ssvb.org/cms/home/spielbetrieb/bfs/bfs_dresden.xhtml?LeaguePresenter.view=resultTable&LeaguePresenter.matchSeriesId=95185928#samsCmsComponent_51094150"
+    }
 }

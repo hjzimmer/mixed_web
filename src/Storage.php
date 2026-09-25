@@ -88,6 +88,8 @@ final class Storage
         return [
             'team' => ['name' => 'Meine Mannschaft', 'players' => []],
             'matchdays' => [],
+            'auth' => ['password' => 'changeme'],
+            'links' => ['ssvbTableUrl' => ''],
         ];
     }
 
@@ -153,9 +155,14 @@ final class Storage
             ];
         }
 
+        $auth = is_array($data['auth'] ?? null) ? $data['auth'] : [];
+        $links = is_array($data['links'] ?? null) ? $data['links'] : [];
+
         return [
             'team' => ['name' => trim((string) ($team['name'] ?? 'Meine Mannschaft')), 'players' => $players],
             'matchdays' => $matchdays,
+            'auth' => ['password' => (string) ($auth['password'] ?? 'changeme')],
+            'links' => ['ssvbTableUrl' => trim((string) ($links['ssvbTableUrl'] ?? ''))],
         ];
     }
 }

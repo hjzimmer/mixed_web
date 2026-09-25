@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+session_start();
 require_once __DIR__ . '/src/Storage.php';
 require_once __DIR__ . '/src/Domain.php';
 require_once __DIR__ . '/src/View.php';
@@ -7,6 +8,7 @@ require_once __DIR__ . '/src/View.php';
 $storage = new Storage(__DIR__ . '/data/data.json');
 $data = $storage->load();
 $page = (string) ($_GET['page'] ?? 'dashboard');
+$isLoggedIn = !empty($_SESSION['loggedIn']);
 
 /** Redirects after a successful mutation. @return never */
 function redirectSaved(string $page, ?string $id = null): never
@@ -37,7 +39,21 @@ function validDateTime(string $date, string $time): bool
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = (string) ($_POST['action'] ?? '');
+    if (!$isLoggedIn && !in_array($action, ['login', 'logout'], true)) redirectError('dashboard', 'Bitte zuerst einloggen.');
     try {
+        if ($action === 'login') {
+            $password = (string) ($_POST['password'] ?? '');
+            if (!hash_equals($data['auth']['password'], $password)) redirectError($page, 'Falsches Passwort.');
+            session_regenerate_id(true);
+            $_SESSION['loggedIn'] = true;
+            header('Location: ?page=' . rawurlencode($page));
+            exit;
+        }
+        if ($action === 'logout') {
+            unset($_SESSION['loggedIn']);
+            header('Location: ?page=' . rawurlencode($page));
+            exit;
+        }
         if ($action === 'save_team') {
             $name = trim((string) ($_POST['name'] ?? ''));
             if ($name === '') redirectError('team', 'Bitte einen Mannschaftsnamen eingeben.');
@@ -126,6 +142,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $teamName = $data['team']['name'];
+if (!$isLoggedIn && $page !== 'dashboard') {
+    header('Location: ?page=dashboard');
+    exit;
+}
 if ($page === 'team') {
     renderHeader('Mannschaft', $teamName, 'team');
     renderPageHeading('Kader', 'Mannschaft pflegen', 'Spieler hinzufügen und die aktuelle Mannschaft übersichtlich halten.');
@@ -167,5 +187,6 @@ renderHeader('Übersicht', $teamName, 'dashboard');
 $upcoming = sortMatchdays($data['matchdays']);
 $dashboardStats = calculatePlayerStats($data);
 renderPageHeading('Saisonübersicht', 'Mannschaftsüberblick', 'Spieltage planen, Einsätze dokumentieren und Statistiken.');
-?><section class="dashboard-grid"><a class="metric-card accent" href="?page=team"><span class="metric-label">Spieler</span><strong><?= count($data['team']['players']) ?></strong><span class="metric-link">Mannschaft pflegen →</span></a><a class="metric-card" href="?page=matchdays"><span class="metric-label">Spieltage</span><strong><?= count($data['matchdays']) ?></strong><span class="metric-link">Kalender öffnen →</span></a><a class="metric-card" href="?page=stats"><span class="metric-label">Sätze erfasst</span><strong><?= array_sum(array_map(static fn (array $matchday): int => array_sum(array_map(static fn (array $game): int => count($game['sets']), $matchday['games'])), $data['matchdays'])) ?></strong><span class="metric-link">Statistik ansehen →</span></a></section><section class="panel compact-stats"><div class="panel-heading"><div><p class="eyebrow">Kompakte Auswertung</p><h2>Spielerstatistik</h2></div><a class="text-button" href="?page=stats">Details →</a></div><?php if (!$dashboardStats): ?><?php renderEmptyState('Noch keine Statistik', 'Sobald Einsätze erfasst sind, erscheinen sie hier.'); ?><?php else: ?><div class="compact-stats-list"><?php foreach ($dashboardStats as $stat): ?><div class="compact-stat-row"><strong><?= e($stat['name']) ?></strong><span><?= $stat['days'] ?> Spieltage</span><span><?= $stat['sets'] ?> Sätze</span><span><?= $stat['points'] ?> Punkte</span></div><?php endforeach; ?></div><?php endif; ?></section><section class="panel"><div class="panel-heading"><div><p class="eyebrow">Nächste Termine</p><h2>Spieltage</h2></div><a class="text-button" href="?page=matchdays">Alle anzeigen →</a></div><?php if (!$upcoming): ?><?php renderEmptyState('Dein Kalender ist leer', 'Lege einen Spieltag an, um Einsätze und Sätze zu dokumentieren.'); ?><?php else: ?><div class="compact-list"><?php foreach (array_slice($upcoming, 0, 4) as $matchday): ?><a class="compact-row" href="?page=matchday&amp;id=<?= e($matchday['id']) ?>"><span class="compact-date"><?= e(date('d.m.', strtotime($matchday['date']))) ?></span><span><strong><?= e(implode(' · ', $matchday['opponents'])) ?></strong><small><?= e($matchday['location']) ?> · <?= e($matchday['time']) ?> Uhr</small></span><span>→</span></a><?php endforeach; ?></div><?php endif; ?></section><?php
+?><section class="dashboard-grid"><a class="metric-card" href="?page=team"><span class="metric-label">Spieler</span><strong><?= count($data['team']['players']) ?></strong><span class="metric-link">Mannschaft pflegen →</span></a><a class="metric-card" href="?page=matchdays"><span class="metric-label">Spieltage</span><strong><?= count($data['matchdays']) ?></strong><span class="metric-link">Kalender öffnen →</span></a><a class="metric-card" href="?page=stats"><span class="metric-label">Sätze erfasst</span><strong><?= array_sum(array_map(static fn (array $matchday): int => array_sum(array_map(static fn (array $game): int => count($game['sets']), $matchday['games'])), $data['matchdays'])) ?></strong><span class="metric-link">Statistik ansehen →</span></a></section><section class="panel"><div class="panel-heading"><div><p class="eyebrow">Nächste Termine</p><h2>Spieltage</h2></div><a class="text-button" href="?page=matchdays">Alle anzeigen →</a></div><?php if (!$upcoming): ?><?php renderEmptyState('Dein Kalender ist leer', 'Lege einen Spieltag an, um Einsätze und Sätze zu dokumentieren.'); ?><?php else: ?><div class="compact-list"><?php foreach (array_slice($upcoming, 0, 4) as $matchday): ?><a class="compact-row" href="?page=matchday&amp;id=<?= e($matchday['id']) ?>"><span class="compact-date"><?= e(date('d.m.', strtotime($matchday['date']))) ?></span><span><strong><?= e(implode(' · ', $matchday['opponents'])) ?></strong><small><?= e($matchday['location']) ?> · <?= e($matchday['time']) ?> Uhr</small></span><span>→</span></a><?php endforeach; ?></div><?php endif; ?></section><section class="panel compact-stats"><div class="panel-heading"><div><p class="eyebrow">Kompakte Auswertung</p><h2>Spielerstatistik</h2></div><a class="text-button" href="?page=stats">Details →</a></div><?php if (!$dashboardStats): ?><?php renderEmptyState('Noch keine Statistik', 'Sobald Einsätze erfasst sind, erscheinen sie hier.'); ?><?php else: ?><div class="compact-stats-list"><?php foreach ($dashboardStats as $stat): ?><div class="compact-stat-row"><strong><?= e($stat['name']) ?></strong><span><?= $stat['days'] ?> Spieltage</span><span><?= $stat['sets'] ?> Sätze</span><span><?= $stat['points'] ?> Punkte</span></div><?php endforeach; ?></div><?php endif; ?></section><?php
+if (isValidHttpUrl($data['links']['ssvbTableUrl'])): ?><p class="external-link"><a href="<?= e($data['links']['ssvbTableUrl']) ?>" target="_blank" rel="noopener noreferrer">SSVB-Tabelle Mixed-Liga →</a></p><?php endif;
 renderFooter();

@@ -44,6 +44,26 @@ function renderHeader(string $title, string $teamName, string $page): void
                 <a class="<?= $page === 'matchdays' ? 'active' : '' ?>" href="?page=matchdays">Spieltage</a>
                 <a class="<?= $page === 'stats' ? 'active' : '' ?>" href="?page=stats">Statistik</a>
             </nav>
+            <?php if (!empty($_SESSION['loggedIn'])): ?>
+                <form method="post" class="auth-form">
+                    <input type="hidden" name="action" value="logout">
+                    <button class="text-button" type="submit">Logout</button>
+                </form>
+            <?php else: ?>
+                <button class="text-button" type="button" data-open-dialog="login-dialog">Login</button>
+                <dialog id="login-dialog" class="login-dialog">
+                    <form method="post" class="auth-form-dialog">
+                        <h2>Login</h2>
+                        <input type="hidden" name="action" value="login">
+                        <label class="sr-only" for="login-password">Passwort</label>
+                        <input id="login-password" type="password" name="password" placeholder="Passwort" autocomplete="off" required autofocus>
+                        <div class="form-actions">
+                            <button class="text-button" type="button" data-close-dialog>Abbrechen</button>
+                            <button class="button primary" type="submit">Login</button>
+                        </div>
+                    </form>
+                </dialog>
+            <?php endif; ?>
         </div>
     </header>
     <main class="shell page-content">
