@@ -28,6 +28,13 @@ function redirectError(string $page, string $message, ?string $id = null): never
     exit;
 }
 
+/** Checks whether the current request is an AJAX request. */
+function isAjaxRequest(): bool
+{
+    return isset($_SERVER['HTTP_X_REQUESTED_WITH'])
+        && strtolower((string) $_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+}
+
 /** Validates a matchday date and time. */
 function validDateTime(string $date, string $time): bool
 {
@@ -134,9 +141,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             unset($matchday);
             $storage->save($data);
+            if (isAjaxRequest()) {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true]);
+                exit;
+            }
             redirectSaved('matchday', $matchdayId);
         }
     } catch (Throwable $exception) {
+        if (isAjaxRequest()) {
+            http_response_code(500);
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => $exception->getMessage()]);
+            exit;
+        }
         redirectError('dashboard', 'Speichern fehlgeschlagen: ' . $exception->getMessage());
     }
 }

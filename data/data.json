@@ -256,6 +256,6 @@
         "password": "admin"
     },
     "links": {
-        "ssvbTableUrl": "https://www.ssvb.org/cms/home/spielbetrieb/bfs/bfs_dresden.xhtml?LeaguePresenter.view=resultTable&LeaguePresenter.matchSeriesId=95185928#samsCmsComponent_51094150"
+        "ssvbTableUrl": "https:\/\/www.ssvb.org\/cms\/home\/spielbetrieb\/bfs\/bfs_dresden.xhtml?LeaguePresenter.view=resultTable&LeaguePresenter.matchSeriesId=95185928#samsCmsComponent_51094150"
     }
 }
