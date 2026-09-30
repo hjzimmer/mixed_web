@@ -92,6 +92,7 @@ input { min-width: 0; padding: 11px 12px; border: 1px solid var(--line); backgro
 .assignment { display: flex; align-items: center; gap: 9px; padding: 9px 10px; background: white; border: 1px solid var(--line); color: var(--ink); font-family: Arial, sans-serif; font-size: 15px; }
 .assignment input[type="checkbox"] { accent-color: var(--green); }
 .point-control { display: flex; align-items: center; gap: 3px; margin-left: auto; }
+.point-control::before { content: 'Pts:'; min-width: 28px; margin-right: 2px; color: var(--muted); font: 12px Arial, sans-serif; text-align: right; }
 .point-control input { width: 48px; padding: 5px; text-align: center; font-family: Arial, sans-serif; font-weight: bold; }
 .step-button { width: 25px; height: 29px; padding: 0; border: 1px solid var(--line); background: var(--paper); color: var(--green); }
 .step-button[data-step="1"] { color: white; background: #2e8b45; border-color: #2e8b45; }

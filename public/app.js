@@ -67,6 +67,23 @@ document.querySelectorAll('[data-step]').forEach((button) => {
 });
 
 /**
+ * Saves a player's assignment immediately when the checkbox changes.
+ *
+ * @param {Event} event Checkbox change event.
+ * @returns {void}
+ */
+function savePlayerAssignment(event) {
+    const form = event.currentTarget.closest('form');
+    if (form) {
+        void saveSetForm(form);
+    }
+}
+
+document.querySelectorAll('.assignment input[type="checkbox"]').forEach((checkbox) => {
+    checkbox.addEventListener('change', savePlayerAssignment);
+});
+
+/**
  * Opens the dialog referenced by a trigger button's data-open-dialog attribute and clears its form.
  *
  * @param {MouseEvent} event Trigger button click event.
