@@ -86,6 +86,8 @@ input { min-width: 0; padding: 11px 12px; border: 1px solid var(--line); backgro
 .game-heading h2 { margin-bottom: 0; }
 .game-heading h2 span { color: var(--muted); font-style: italic; }
 .game-heading h2 span.game-result { color: var(--ink); font-style: normal; font-weight: bold; margin-left: 6px; }
+.games-overview .result-win { color: #2e8b45; }
+.games-overview .result-loss { color: var(--coral); }
 .set-list { display: grid; gap: 18px; margin-top: 25px; }
 .set-card { padding: 20px; background: #f6f8f4; border: 1px solid var(--line); }
 .set-heading { align-items: center; margin-bottom: 15px; }

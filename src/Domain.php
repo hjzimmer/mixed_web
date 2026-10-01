@@ -53,6 +53,19 @@ function calculatePlayerStats(array $data): array
 }
 
 /**
+ * Returns the CSS class indicating a win, loss, or neutral (no decided result) outcome.
+ *
+ * @param array{own:int, opponent:int} $result Game result.
+ * @return string CSS class name.
+ */
+function gameResultClass(array $result): string
+{
+    if ($result['own'] > $result['opponent']) return 'result-win';
+    if ($result['own'] < $result['opponent']) return 'result-loss';
+    return '';
+}
+
+/**
  * Calculates a game's result (sets won) from the scores of its completed sets.
  *
  * @param array<string, mixed> $game Game with sets carrying an optional "score".
