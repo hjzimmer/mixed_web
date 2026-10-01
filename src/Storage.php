@@ -79,6 +79,23 @@ final class Storage
     }
 
     /**
+     * Normalizes a set's score to clamped integers or null when absent/invalid.
+     *
+     * @param mixed $score Raw score value.
+     * @return array{own:int|null, opponent:int|null} Normalized score.
+     */
+    private static function normalizeScore(mixed $score): array
+    {
+        $normalize = static function (mixed $value): ?int {
+            return is_int($value) || is_numeric($value) ? max(0, min(99, (int) $value)) : null;
+        };
+        return [
+            'own' => is_array($score) ? $normalize($score['own'] ?? null) : null,
+            'opponent' => is_array($score) ? $normalize($score['opponent'] ?? null) : null,
+        ];
+    }
+
+    /**
      * Returns the initial empty document shape.
      *
      * @return array<string, mixed> Empty application data.
@@ -137,7 +154,7 @@ final class Storage
                             ];
                         }
                     }
-                    $sets[] = ['id' => (string) $set['id'], 'assignments' => $assignments];
+                    $sets[] = ['id' => (string) $set['id'], 'assignments' => $assignments, 'score' => self::normalizeScore($set['score'] ?? null)];
                 }
                 $games[] = [
                     'id' => (string) $game['id'],

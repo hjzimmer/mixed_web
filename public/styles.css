@@ -85,9 +85,12 @@ input { min-width: 0; padding: 11px 12px; border: 1px solid var(--line); backgro
 .game-heading, .panel-heading, .set-heading { display: flex; justify-content: space-between; align-items: start; gap: 16px; }
 .game-heading h2 { margin-bottom: 0; }
 .game-heading h2 span { color: var(--muted); font-style: italic; }
+.game-heading h2 span.game-result { color: var(--ink); font-style: normal; font-weight: bold; margin-left: 6px; }
 .set-list { display: grid; gap: 18px; margin-top: 25px; }
 .set-card { padding: 20px; background: #f6f8f4; border: 1px solid var(--line); }
 .set-heading { align-items: center; margin-bottom: 15px; }
+.set-score { display: flex; align-items: center; gap: 6px; margin-bottom: 15px; color: var(--muted); font: 12px Arial, sans-serif; text-transform: uppercase; letter-spacing: .06em; }
+.set-score input { width: 48px; padding: 5px; text-align: center; font-family: Arial, sans-serif; font-weight: bold; text-transform: none; }
 .assignment-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 18px; }
 .assignment { display: flex; align-items: center; gap: 9px; padding: 9px 10px; background: white; border: 1px solid var(--line); color: var(--ink); font-family: Arial, sans-serif; font-size: 15px; }
 .assignment input[type="checkbox"] { accent-color: var(--green); }
@@ -113,6 +116,8 @@ input { min-width: 0; padding: 11px 12px; border: 1px solid var(--line); backgro
 .compact-row span:nth-child(2) { flex: 1; }
 .compact-row strong, .compact-row small { display: block; }
 .compact-row small { color: var(--muted); font: 12px Arial, sans-serif; }
+.games-overview .scroll-list { max-height: 248px; overflow-y: auto; }
+.game-score { font: bold 16px Arial, sans-serif; color: var(--green); }
 .table-wrap { overflow-x: auto; }
 .external-link { margin-top: 28px; text-align: center; }
 .external-link a { color: var(--green); font: bold 14px Arial, sans-serif; }
@@ -147,4 +152,6 @@ td { color: var(--muted); }
     .compact-stats-list { grid-template-columns: 1fr; }
     .compact-stat-row { grid-template-columns: 1fr 1fr; gap: 8px; }
     .compact-stat-row strong { grid-column: 1 / -1; }
+    .games-overview .compact-row { gap: 10px; padding: 14px 12px; }
+    .games-overview .scroll-list { max-height: 220px; }
 }

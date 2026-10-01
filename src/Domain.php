@@ -53,6 +53,47 @@ function calculatePlayerStats(array $data): array
 }
 
 /**
+ * Calculates a game's result (sets won) from the scores of its completed sets.
+ *
+ * @param array<string, mixed> $game Game with sets carrying an optional "score".
+ * @return array{own:int, opponent:int} Number of sets won by own team and opponent.
+ */
+function calculateGameResult(array $game): array
+{
+    $result = ['own' => 0, 'opponent' => 0];
+    foreach ($game['sets'] as $set) {
+        $score = $set['score'] ?? null;
+        if (!is_array($score) || $score['own'] === null || $score['opponent'] === null) continue;
+        if ($score['own'] > $score['opponent']) $result['own']++;
+        elseif ($score['opponent'] > $score['own']) $result['opponent']++;
+    }
+    return $result;
+}
+
+/**
+ * Collects all games across all matchdays with their computed result, sorted chronologically.
+ *
+ * @param array<string, mixed> $data Application data.
+ * @return array<int, array{matchdayId:string, date:string, opponent:string, result:array{own:int, opponent:int}}> Games with results.
+ */
+function collectGameResults(array $data): array
+{
+    $entries = [];
+    foreach ($data['matchdays'] as $matchday) {
+        foreach ($matchday['games'] as $game) {
+            $entries[] = [
+                'matchdayId' => $matchday['id'],
+                'date' => $matchday['date'],
+                'opponent' => $game['opponent'],
+                'result' => calculateGameResult($game),
+            ];
+        }
+    }
+    usort($entries, static fn (array $left, array $right): int => strcmp($left['date'], $right['date']));
+    return $entries;
+}
+
+/**
  * Finds a matchday by its identifier.
  *
  * @param array<string, mixed> $data Application data.

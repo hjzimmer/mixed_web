@@ -84,6 +84,59 @@ document.querySelectorAll('.assignment input[type="checkbox"]').forEach((checkbo
 });
 
 /**
+ * Computes the sets won by each side from a game card's score inputs.
+ *
+ * @param {Element} gameCard Game card containing the set forms.
+ * @returns {{own: number, opponent: number}} Sets won by own team and opponent.
+ */
+function computeGameResult(gameCard) {
+    let own = 0;
+    let opponent = 0;
+    gameCard.querySelectorAll('.set-score').forEach((scoreLabel) => {
+        const ownValue = scoreLabel.querySelector('input[name="scoreOwn"]').value.trim();
+        const opponentValue = scoreLabel.querySelector('input[name="scoreOpponent"]').value.trim();
+        if (ownValue === '' || opponentValue === '') return;
+        const ownNumber = Number(ownValue);
+        const opponentNumber = Number(opponentValue);
+        if (ownNumber > opponentNumber) own++;
+        else if (opponentNumber > ownNumber) opponent++;
+    });
+    return { own, opponent };
+}
+
+/**
+ * Updates a game card's displayed result from its current set scores.
+ *
+ * @param {Element} gameCard Game card to update.
+ * @returns {void}
+ */
+function updateGameResult(gameCard) {
+    const resultElement = gameCard.querySelector('.game-result');
+    if (!resultElement) return;
+    const result = computeGameResult(gameCard);
+    resultElement.textContent = `${result.own}:${result.opponent}`;
+}
+
+/**
+ * Saves a set's score immediately when either score input changes and refreshes the game result.
+ *
+ * @param {Event} event Score input change event.
+ * @returns {void}
+ */
+function saveSetScore(event) {
+    const form = event.currentTarget.closest('form');
+    const gameCard = event.currentTarget.closest('.game-card');
+    if (gameCard) updateGameResult(gameCard);
+    if (form) {
+        void saveSetForm(form);
+    }
+}
+
+document.querySelectorAll('.set-score input[type="number"]').forEach((input) => {
+    input.addEventListener('change', saveSetScore);
+});
+
+/**
  * Opens the dialog referenced by a trigger button's data-open-dialog attribute and clears its form.
  *
  * @param {MouseEvent} event Trigger button click event.
