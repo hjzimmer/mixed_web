@@ -280,7 +280,7 @@ renderPageHeading('Saisonübersicht', 'Mannschaftsüberblick', 'Spieltage planen
             <?php foreach (array_slice($upcoming, 0, 4) as $matchday): ?>
             <a class="compact-row" href="?page=matchday&amp;id=<?= e($matchday['id']) ?>">
                 <span class="compact-date"><?= e(date('d.m.', strtotime($matchday['date']))) ?></span>
-                <span><strong><?= e(implode(' · ', $matchday['opponents'])) ?></strong><small><?= e($matchday['location']) ?> · <?= e($matchday['time']) ?> Uhr</small></span>
+                <span><strong>Gegner: <?= e(implode(' / ', $matchday['opponents'])) ?></strong><small><?= e($matchday['location']) ?> · <?= e($matchday['time']) ?> Uhr</small></span>
                 <span>→</span>
             </a>
             <?php endforeach; ?>
