@@ -13,6 +13,39 @@ document.querySelectorAll('[data-confirm]').forEach((form) => {
     form.addEventListener('submit', confirmFormSubmission);
 });
 
+function showSaveError(message) {
+    const dialog = document.getElementById('save-error-dialog');
+    if (!dialog) return;
+    dialog.querySelector('#save-error-message').textContent = message;
+    if (!dialog.open) dialog.showModal();
+}
+
+async function submitProtectedForm(event) {
+    const form = event.currentTarget;
+    const action = form.elements.namedItem('action')?.value;
+    if (event.defaultPrevented || action === 'login' || action === 'logout') return;
+    event.preventDefault();
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            credentials: 'same-origin',
+        });
+        if (response.status === 403) {
+            showSaveError('Bitte zuerst einloggen. Die Änderungen wurden nicht gespeichert.');
+            return;
+        }
+        if (!response.ok) throw new Error('Die Änderungen konnten nicht gespeichert werden.');
+        window.location.assign(response.url);
+    } catch (error) {
+        showSaveError(error instanceof Error ? error.message : 'Die Änderungen konnten nicht gespeichert werden.');
+    }
+}
+
+document.querySelectorAll('form[method="post"]').forEach((form) => {
+    form.addEventListener('submit', submitProtectedForm);
+});
+
 /**
  * Saves the current set form in the background.
  *
@@ -31,11 +64,13 @@ async function saveSetForm(form) {
         });
 
         if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(errorText || 'Satz konnte nicht gespeichert werden.');
+            const isJson = response.headers.get('Content-Type')?.includes('application/json');
+            const message = isJson ? (await response.json()).message : null;
+            throw new Error(message || 'Satz konnte nicht gespeichert werden.');
         }
     } catch (error) {
         console.log('Fehler beim Speichern des Satzes:', error);
+        showSaveError(error instanceof Error ? error.message : 'Satz konnte nicht gespeichert werden.');
     }
 }
 
@@ -154,6 +189,13 @@ document.querySelectorAll('[data-open-dialog]').forEach((button) => {
 
 document.querySelectorAll('[data-close-dialog]').forEach((button) => {
     button.addEventListener('click', () => button.closest('dialog')?.close());
+});
+
+document.getElementById('save-error-dialog')?.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        event.preventDefault();
+        event.currentTarget.close();
+    }
 });
 
 const loginDialog = document.getElementById('login-dialog');

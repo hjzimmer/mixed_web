@@ -81,6 +81,15 @@ function renderFooter(): void
 {
     ?></main>
     <footer class="site-footer"><div class="shell">Mannschaftsverwaltung · JSON lokal gespeichert</div></footer>
+    <dialog id="save-error-dialog" class="login-dialog" role="alertdialog" aria-labelledby="save-error-title" aria-describedby="save-error-message">
+        <div class="auth-form-dialog">
+            <h2 id="save-error-title">Nicht gespeichert</h2>
+            <p id="save-error-message"></p>
+            <div class="form-actions">
+                <button class="button primary" type="button" data-close-dialog autofocus>Schließen</button>
+            </div>
+        </div>
+    </dialog>
     <script src="public/app.js"></script>
     </body>
     </html><?php

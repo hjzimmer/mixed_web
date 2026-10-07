@@ -54,19 +54,34 @@ function parseSetScore(mixed $value): ?int
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = (string) ($_POST['action'] ?? '');
-    if (!$isLoggedIn && !in_array($action, ['login', 'logout'], true)) redirectError('dashboard', 'Bitte zuerst einloggen.');
+    if (!$isLoggedIn && $action !== 'login') {
+        http_response_code(403);
+        $message = 'Bitte zuerst einloggen. Die Änderungen wurden nicht gespeichert.';
+        if (isAjaxRequest()) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'message' => $message]);
+        } else {
+            renderHeader('Anmeldung erforderlich', $data['team']['name'], $page);
+            echo '<div class="notice error" role="alert">' . e($message) . '</div>';
+            renderFooter();
+        }
+        exit;
+    }
     try {
+        $returnId = $page === 'matchday' && findMatchday($data, (string) ($_GET['id'] ?? '')) !== null ? (string) $_GET['id'] : null;
+        $returnLocation = '?page=' . rawurlencode($page);
+        if ($returnId !== null) $returnLocation .= '&id=' . rawurlencode($returnId);
         if ($action === 'login') {
             $password = (string) ($_POST['password'] ?? '');
-            if (!hash_equals($data['auth']['password'], $password)) redirectError($page, 'Falsches Passwort.');
+            if (!hash_equals($data['auth']['password'], $password)) redirectError($page, 'Falsches Passwort.', $returnId);
             session_regenerate_id(true);
             $_SESSION['loggedIn'] = true;
-            header('Location: ?page=' . rawurlencode($page));
+            header('Location: ' . $returnLocation);
             exit;
         }
         if ($action === 'logout') {
             unset($_SESSION['loggedIn']);
-            header('Location: ?page=' . rawurlencode($page));
+            header('Location: ' . $returnLocation);
             exit;
         }
         if ($action === 'save_team') {
@@ -169,10 +184,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $teamName = $data['team']['name'];
-if (!$isLoggedIn && $page !== 'dashboard') {
-    header('Location: ?page=dashboard');
-    exit;
-}
 if ($page === 'team') {
     renderHeader('Mannschaft', $teamName, 'team');
     renderPageHeading('Kader', 'Mannschaft pflegen', 'Spieler hinzufügen und die aktuelle Mannschaft übersichtlich halten.');
