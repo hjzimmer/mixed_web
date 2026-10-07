@@ -259,7 +259,8 @@ if ($page === 'stats') {
     renderFooter(); exit;
 }
 renderHeader('Übersicht', $teamName, 'dashboard');
-$upcoming = sortMatchdays($data['matchdays']);
+$today = date('Y-m-d');
+$upcoming = sortMatchdays(array_filter($data['matchdays'], static fn (array $matchday): bool => $matchday['date'] >= $today));
 $dashboardStats = calculatePlayerStats($data);
 $gameResults = collectGameResults($data);
 renderPageHeading('Saisonübersicht', 'Mannschaftsüberblick', 'Spieltage planen, Einsätze dokumentieren und Statistiken.');
@@ -274,7 +275,7 @@ renderPageHeading('Saisonübersicht', 'Mannschaftsüberblick', 'Spieltage planen
         <a class="text-button" href="?page=matchdays">Alle anzeigen →</a>
     </div>
     <?php if (!$upcoming): ?>
-        <?php renderEmptyState('Dein Kalender ist leer', 'Lege einen Spieltag an, um Einsätze und Sätze zu dokumentieren.'); ?>
+        <?php renderEmptyState('Keine nächsten Spieltage', 'Es sind keine Spieltage ab heute geplant.'); ?>
     <?php else: ?>
         <div class="compact-list">
             <?php foreach (array_slice($upcoming, 0, 4) as $matchday): ?>
