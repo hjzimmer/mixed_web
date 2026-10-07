@@ -26,7 +26,7 @@ async function submitProtectedForm(event) {
     if (event.defaultPrevented || action === 'login' || action === 'logout') return;
     event.preventDefault();
     try {
-        const response = await fetch(form.action, {
+        const response = await fetch(form.getAttribute('action') || window.location.href, {
             method: 'POST',
             body: new FormData(form),
             credentials: 'same-origin',
